@@ -2,7 +2,7 @@
 
 A generic, agent-agnostic starter for the LLM Wiki pattern — a persistent, compounding
 knowledge base where raw sources (PDFs, articles, clippings) are ingested once and
-Claude extracts structured, interlinked knowledge.
+an LLM agent extracts structured, interlinked knowledge.
 
 ---
 
@@ -34,7 +34,7 @@ wiki-template/
 ## Getting started
 
 1. Copy this template directory into your project root.
-2. Read `AGENT.md` — it defines every rule Claude must follow.
+2. Read `AGENT.md` — it defines every rule the agent must follow.
 3. Drop a PDF into `raw/pdfs/` or a clipping into `raw/clippings/`.
 4. Run `/ingest` (or `/richpdf` for PDFs) to start the pipeline.
 5. Run `/lint` after every ingest to verify pipeline completeness.
@@ -59,7 +59,7 @@ tool you're using:
 | **Windsurf** | `.windsurf/rules/` | Copy command stubs into Windsurf's rules directory |
 | **Other agents** | Varies | Point your agent at `.agent/commands/<name>.md` manually, or copy to the runtime's expected path |
 
-**Claude Code quick setup** — run once from the repo root:
+**Claude Code setup** — run once from the repo root:
 
 ```bash
 # Option A: symlink (changes to .agent/commands/ reflect instantly)
@@ -69,13 +69,13 @@ mkdir -p .claude && ln -s ../.agent/commands .claude/commands
 cp -r .agent/commands .claude/
 ```
 
-After copying or symlinking, Claude Code will register each file as a `/command-name`
+After copying or symlinking, Claude Code registers each file as a `/command-name`
 slash command automatically.
 
-> **Why two directories?** `.claude/commands/` is Claude Code's native path and is
-> often gitignored or user-local. `.agent/commands/` is committed alongside the skills
-> so the commands travel with the project regardless of which agent reads them.
-> The indirection is intentional — one source of truth, multiple consumers.
+> **Why two directories?** `.agent/commands/` is the committed, agent-agnostic source
+> of truth. Runtime-specific paths (`.claude/commands/`, `.cursor/rules/`, etc.) are
+> user-local or gitignored — wire them up once per machine. One source of truth,
+> multiple consumers.
 
 ---
 
